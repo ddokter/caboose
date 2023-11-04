@@ -1,0 +1,63 @@
+{% extends 'base_detail.html' %}
+
+{% load i18n bootstrap4 caboose_tags %}
+
+{% block content %}
+
+<ul class="nav nav-tabs">
+  <li class="nav-item">
+    <a class="nav-link" href="{{ object|detail_url }}">
+      {% trans 'Details' %}
+    </a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link active" href="#">
+      {% trans 'Convert' %}
+    </a>
+  </li>
+</ul>
+
+{% bootstrap_messages %}
+
+<form action="{% url 'convert_recipe' pk=object.id %}"
+      method="POST"
+      enctype="multipart/form-data"
+      class="form">
+
+    {% csrf_token %}
+    {{ form.media }}
+
+    {% block formfields %}
+    {% bootstrap_form form %}
+    {% endblock %}
+
+    {% buttons %}
+    <button type="submit" class="btn btn-primary">
+      {% trans 'Convert' %}
+    </button>
+    {% endbuttons %}
+</form>
+
+{% if view.data %}
+
+
+<h2>{% trans 'Ingredients' %}</h2>
+
+<ul class="list-group">
+  {% for ingredient, amount, price in view.data %}
+  <li class="list-group-item">
+    {{ amount }}
+    <a href="{{ ingredient.unit|detail_url }}">{{ ingredient.unit }}</a>
+    <a href="{{ ingredient.ingredient|detail_url }}">{{ ingredient.ingredient }}</a>
+    <div class="float-right">
+      &cong; &euro; {{ price|floatformat:2 }}
+    </div>
+
+  </li>
+  {% endfor %}
+</ul>
+
+{% endif %}
+
+
+{% endblock content %}

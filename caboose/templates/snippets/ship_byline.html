@@ -1,0 +1,21 @@
+{% extends 'snippets/byline.html' %}
+
+{% load i18n %}
+
+{% block content %}
+
+{% for facility in obj.list_facilities %}
+{% if facility.works_when_sailing %}
+<span class="badge badge-default">
+  {{ facility.facility }}
+</span>
+{% else %}
+<span class="badge badge-warning" data-toggle="tooltip" data-placement="left"
+      title="Not when sailing">
+  {{ facility.facility }}
+</span>
+{% endif %}
+
+{% endfor %}
+
+{% endblock %}

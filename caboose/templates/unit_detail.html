@@ -1,0 +1,20 @@
+{% extends 'base_detail.html' %}
+
+{% load i18n caboose_tags %}
+
+{% block content %}
+
+{% if unit.info %}
+<p>
+  {{ unit.info }}
+</p>
+{% endif %}
+
+<dl>
+  <dt>{% trans 'Unit' %}</dt>
+  <dd><a href="{{ object|detail_url }}">{{ object }}</a></dd>
+</dl>
+
+
+
+{% endblock %}

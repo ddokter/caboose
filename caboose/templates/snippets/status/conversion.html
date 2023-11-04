@@ -1,0 +1,5 @@
+{% load unicorn_tags %}
+
+<span class="badge badge-pill badge-{{ obj.status|status_class }}">
+  {{ obj|status_label|default:obj.status }}
+</span>

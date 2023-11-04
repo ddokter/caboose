@@ -1,0 +1,28 @@
+{% extends 'snippets/byline.html' %}
+
+{% load i18n %}
+
+{% block content %}
+
+{% if not obj.has_ingredients %}
+<span class="badge badge-warning">{% trans 'No ingredients given' %}</span>
+{% endif %}
+
+{% for tag in obj.tag.all %}
+  <span class="badge badge-{{ tag.color }}">
+    {{ tag }}
+  </span>
+{% endfor %}
+
+{{ obj.descr }} | {% trans "Price pp" %}
+{% with price=obj.price_pp %}
+
+{% if price.0 == -1 %}
+  {% trans 'Unknown' %}
+{% else %}
+  &cong; &euro; {{ price.1|floatformat:2 }}
+{% endif %}
+
+{% endwith %}
+
+{% endblock %}

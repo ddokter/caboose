@@ -1,0 +1,8 @@
+{% extends 'base_detail.html' %}
+
+{% load caboose_tags %}
+
+{% block after_content %}
+{% sublisting 'Recipes' object.list_recipes 'recipe' %}
+{% sublisting 'Conversions' object.list_conversions 'conversion' %}
+{% endblock %}

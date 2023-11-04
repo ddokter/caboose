@@ -1,0 +1,98 @@
+{% extends 'base_detail.html' %}
+
+{% load i18n caboose_tags %}
+
+{% block content %}
+
+{% with active_tab='details' %}
+{% include 'snippets/event_tabs.html' %}
+{% endwith %}
+
+<p>{{ object.info }}</p>
+
+<dl class="row">
+  <dd class="col-sm-3">
+    {% trans 'Group size' %}
+  </dd>
+  <dt class="col-sm-9">
+    {{ object.groupsize }}
+  </dt>
+  <dd class="col-sm-3">
+    {% trans 'Group composition' %}
+  </dd>
+  <dt class="col-sm-9">
+    {{ object.get_grouptype_display }}
+  </dt>
+  <dd class="col-sm-3">
+    {% trans 'Cost' %}
+  </dd>
+  <dt class="col-sm-9">
+    &cong; &euro; {{ object.get_cost|floatformat:2 }}
+  </dt>
+  <dd class="col-sm-3">
+    {% trans 'Cost p.p.' %}
+  </dd>
+  <dt class="col-sm-9">
+    &cong; &euro; {{ object.get_cost_pp|floatformat:2 }}
+  </dt>      
+</dl>
+
+<h2>{% trans 'Notes' %}</h2>
+
+{{ object.get_safe_notes }}
+
+<h2>{% trans 'Schema' %}</h2>
+
+<pre>
+{{ object.get_safe_plan }}
+</pre>
+
+{% if object.evaluation %}
+<h2>{% trans 'Evaluation' %}</h2>
+  {{ object.evaluation }}
+{% endif %}
+
+
+{% with recipes=object.eventrecipe_set.all %}
+{% if recipes|length %}
+<h2>
+  {% trans 'Recipes' %}
+</h2>
+
+<ul class="list-group">
+  {% for recipe in recipes %}
+  <li class="list-group-item">
+    {{ recipe.amount|floatformat:1 }}
+    <a href="{{ recipe.recipe|detail_url }}">{{ recipe.recipe }}</a>
+    {% for tag in recipe.recipe.tag.all %}
+    <span class="badge badge-{{ tag.color }}">
+      {{ tag }}
+    </span>
+    {% endfor %}
+    {% if not recipe.is_facilitated %}
+    <span class="alert alert-danger">
+      {% trans 'Recipe facilities not available' %}
+    </span>    
+    {% endif %}
+
+    {% if recipe.meal > -1 %}
+    <span class="badge badge-pill badge-secondary }} float-right">
+      {{ recipe.get_meal_display }}
+    </span>
+    {% endif %}
+
+    {% if recipe.day %}
+    <span class="badge badge-pill badge-secondary }} float-right">
+      Day {{ recipe.day }}
+    </span>
+    {% endif %}
+    
+  </li>
+  {% endfor %}
+</ul>
+{% endif %}
+{% endwith %}
+
+{% sublisting 'Extra ingredients' object.list_extras %}
+
+{% endblock content %}

@@ -1,0 +1,145 @@
+{% extends 'base_detail.html' %}
+
+{% load i18n caboose_tags %}
+
+
+{% block warnings %}
+{% with price=object.price_pp %}
+{% if price.0 == -1 %}
+<div class="alert alert-warning">
+  <ul>
+    {% for err in price.2 %}
+    <li>{% trans 'No price available for ' %}{{ err.ingredient }}</li>
+    {% endfor %}
+  </ul>
+</div>
+{% endif %}
+{% endwith %}
+{% endblock %}
+
+
+{% block content %}
+
+<ul class="nav nav-tabs">
+  <li class="nav-item">
+    <a class="nav-link active" href="#">{% trans 'Details' %}</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="{% url 'convert_recipe' pk=object.id %}">
+      {% trans 'Convert' %}
+    </a>
+  </li>
+</ul>
+
+<section>
+  <p><i>{{ object.descr }}</i></p>
+</section>
+
+{% for tag in object.tag.all %}
+  <span class="badge badge-{{ tag.color }}">
+    {{ tag }}
+  </span>
+{% endfor %}
+
+
+<p>{{ object.notes|txt2html|linebreaks }}</p>
+
+<dl class="row">
+  <dt class="col-sm-3">
+    {% trans 'Servings' %}
+  </dt>
+  <dd class="col-sm-9">
+    {{ object.servings }}
+  </dd>
+  <dt class="col-sm-3">
+    {% trans 'Avg. price per person' %}
+  </dt>
+  <dd class="col-sm-9">
+    {% with price=object.price_pp %}
+
+    &cong; &euro; {{ price.1|floatformat:2 }}
+
+    {% if price.0 == -1 %}
+
+    <i class="text-warning" data-toggle="tooltip" data-placement="top"
+       title="{% trans 'Not all prices included' %}">
+      <span class="fas fa-exclamation-triangle">
+      </span>
+    </i>
+    {% else %}
+
+    {% if object.price_pp_opt.1 %}
+    (optional part: &cong; &euro; {{ object.price_pp_opt.1|floatformat:2 }})
+    {% endif %}
+    
+    {% endif %}
+    {% endwith %}
+  </dd>
+  <dt class="col-sm-3">
+    {% trans 'Facilities needed' %}
+  </dt>
+  <dd class="col-sm-9">
+    {% for fac in object.list_facilities %}
+    {{ fac }}
+    {% endfor %}
+  </dd>
+  <dt class="col-sm-3">{% trans 'Subrecipes' %}</dt>
+  <dd class="col-sm-9">
+    <ul>
+    {% for sub in object.subs.all %}
+    <li><a href="{{ sub|detail_url }} ">{{ sub }}</a></li>
+    {% endfor %}
+    </ul>
+  </dd>
+</dl>
+
+{% with ingredients=object.list_ingredients %}
+
+{% if ingredients|length %}
+<h2>
+  {% trans 'Ingredients' %}
+  {% inline_add_action 'recipeingredient' object '?fk_field=recipe' %}
+</h2>
+
+<ul class="list-group">
+  {% for ingredient in ingredients %}
+  <li class="list-group-item">
+    {{ ingredient.calculated_amount }}
+    <a href="{{ ingredient.unit|detail_url }}">{{ ingredient.unit }}</a>
+    <a href="{{ ingredient.ingredient|detail_url }}">{{ ingredient.ingredient }}</a>
+    {% if ingredient.calculated_amount > ingredient.amount_avg %}
+    <div class="badge badge-warning">
+      {% trans 'More than avg' %}
+    </div>
+    {% endif %}
+
+    {% if ingredient.optional %}
+    <span class="badge badge-info">optional</span>
+    {% endif %}
+    
+    <div class="float-right">
+      &cong; &euro; {{ ingredient.price|floatformat:2 }}
+    </div>
+
+  </li>
+  {% endfor %}
+</ul>
+{% endif %}
+{% endwith %}
+
+
+{% with alts=object.list_alts %}
+{% if alts|length %}
+<h2>
+  {% trans 'Alternatives' %}
+</h2>
+
+<ul class="list-group">
+  {% for alt in alts %}
+  <li>{{ alt }}</li>
+  {% endfor %}
+</ul>
+{% endif %}
+{% endwith %}
+
+{% endblock content %}

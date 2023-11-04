@@ -1,0 +1,43 @@
+{% extends 'base_detail.html' %}
+
+{% load i18n caboose_tags %}
+
+{% block content %}
+
+{% with active_tab='list' %}
+{% include 'snippets/event_tabs.html' %}
+{% endwith %}
+
+<p>{{ object.info }}</p>
+
+{% if view.list_warnings %}
+<div class="alert alert-warning">
+  <ul>
+    {% for warning in view.list_warnings %}
+    <li>{% trans 'No ingredients given for ' %}{{ warning.0 }}</li>
+    {% endfor %}
+  </ul>
+</div>
+{% endif %}
+
+{% with ingredients=object.generate_shopping_list %}
+{% if ingredients|length %}
+<h2>
+  {% trans 'Shopping list' %}
+</h2>
+
+<ul class="list-group">
+  {% for ingredient in ingredients.keys %}
+  <li class="list-group-item">
+    {{ ingredient }}: {{ ingredients|get:ingredient|floatformat:1 }} {{ ingredient.default_unit }}
+    {% if ingredients|get:ingredient < 0 %}
+      <span class="badge badge-danger">{% trans 'no conversion' %}</span>
+    {% endif %}
+  </li>
+  {% endfor %}
+</ul>
+{% endif %}
+{% endwith %}
+
+
+{% endblock content %}

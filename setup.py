@@ -9,8 +9,6 @@ CHANGES = open(os.path.join(here, 'CHANGES.txt')).read()
 requires = [
     'Django',
     'django-bootstrap4',
-    'django-polymorphic',
-    'beerlab'
     ]
 
 setup(name='caboose',

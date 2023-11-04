@@ -1,0 +1,22 @@
+{% extends 'snippets/byline.html' %}
+
+{% load i18n %}
+
+
+{% block replace %}
+
+{% if obj.archived %}
+<span class="badge badge-warning">
+  Archived
+</span>
+{% endif %}
+
+<div class="clearfix">
+  <em class="text-secondary">
+    {% if obj.ship %}
+    <span class="badge badge-info">{{ obj.ship }}</span>
+    {% endif %}    
+  </em>
+</div>
+
+{% endblock %}

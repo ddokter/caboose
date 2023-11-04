@@ -1,0 +1,28 @@
+{% extends 'base_detail.html' %}
+
+{% load i18n caboose_tags %}
+
+{% block content %}
+
+{% with facs=object.shipfacility_set.all %}
+{% if facs|length %}
+<h2>
+  {% trans 'Facilities' %}
+</h2>
+
+<ul class="list-group">
+  {% for fac in facs %}
+  <li class="list-group-item">
+    {{ fac.facility }}
+    {% if not fac.works_when_sailing %}
+    <span class="alert alert-danger">
+      {% trans 'Not during sailing' %}
+    </span>    
+    {% endif %}
+  </li>
+  {% endfor %}
+</ul>
+{% endif %}
+{% endwith %}
+
+{% endblock content %}

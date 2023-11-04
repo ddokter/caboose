@@ -1,0 +1,7 @@
+<input type="text" name="{{ name }}_ac"
+       value="{{ value|default:'' }}"
+       class="autocomplete form-control"
+       placeholder="{{ placeholder }}"
+       data-url="{{ url }}" data-tgt="#{{ name }}" />
+<input class="hide" type="text" name="{{ name }}"
+       id="{{ name }}" value="{{ value.id }}" />

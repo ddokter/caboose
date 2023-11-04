@@ -1,0 +1,13 @@
+<input name="{{ widget.name}}" type="text"
+       class="form-control auto"
+       {% if widget.value != None %}
+       value="{{ widget.value.0|stringformat:'s' }}"
+       {% endif %}
+       list="{{ widget.name }}_data" />
+<datalist id="{{ widget.name }}_data">
+  {% for group_name, group_choices, group_index in widget.optgroups %}
+  {% for option in group_choices %}
+  {% include option.template_name with widget=option %}
+  {% endfor %}
+  {% endfor %}
+</datalist>

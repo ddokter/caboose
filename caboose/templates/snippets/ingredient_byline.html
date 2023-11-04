@@ -1,0 +1,26 @@
+{% extends 'snippets/byline.html' %}
+
+{% block content %}
+
+{% if obj.categories %}
+{% for cat in obj.categories %}
+
+<span class="badge badge-info">
+  {% if cat.icon %}
+  <i class="fas fa-{{ cat.icon }}"></i>
+  {% endif %}
+  {{ cat }}
+</span>
+{% endfor %}
+
+|
+{% endif %}
+
+{% if obj.synoniem %}
+{{ obj.synoniem }}
+|
+{% endif %}
+
+&euro; {{ obj.avg_price|default_if_none:"-" }} / {{ obj.default_unit }}
+
+{% endblock %}

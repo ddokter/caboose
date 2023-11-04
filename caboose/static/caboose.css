@@ -1,0 +1,8 @@
+.chosen-container {
+    width: 100% !important;
+}
+
+.chosen-single, .chosen-choices {
+    border: 0px !important;
+}
+

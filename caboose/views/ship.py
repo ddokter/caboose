@@ -23,6 +23,8 @@ class FormSetMixin:
     @property
     def formsets(self):
 
+        """ Make formsets a property, for easy access in templates """
+
         factory = inlineformset_factory(Ship, Ship.facility.through,
                                         exclude=[])
 
@@ -38,12 +40,14 @@ class FormSetMixin:
 
     def form_valid(self, form):
 
+        """ Validate form and formsets """
+
         self.object = form.save()
 
-        _formset = self.formset
+        for _formset in self.formsets:
 
-        if _formset.is_valid():
-            _formset.save()
+            if _formset.is_valid():
+                _formset.save()
 
         return HttpResponseRedirect(self.get_success_url())
 

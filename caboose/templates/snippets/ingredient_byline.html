@@ -16,6 +16,16 @@
 |
 {% endif %}
 
+{% if obj.allergen.all %}
+{% for alg in obj.allergen.all %}
+<span class="badge badge-danger">
+  {% include 'snippets/icon/allergen.html' %}
+  {{ alg }}
+</span>
+{% endfor %}
+|
+{% endif %}
+
 {% if obj.synoniem %}
 {{ obj.synoniem }}
 |

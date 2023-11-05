@@ -28,94 +28,99 @@
     Caboose
   </a>
   <button class="navbar-toggler" type="button" data-toggle="collapse"
-          data-target="#navbarSupportedContent"
-          aria-controls="navbarSupportedContent" aria-expanded="false"
-          aria-label="Toggle navigation">
+	  data-target="#navbarSupportedContent"
+	  aria-controls="navbarSupportedContent" aria-expanded="false"
+	  aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
   <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item {% if view.view_name.0 == 'ship' %}active{% endif %}">
-        <a class="nav-link" href="{% url 'list' model='ship' %}">
-          {% trans 'Ships' %}
-        </a>
+	<a class="nav-link" href="{% url 'list' model='ship' %}">
+	  {% trans 'Ships' %}
+	</a>
       </li>
       <li class="nav-item {% if view.view_name.0 == 'facility' %}active{% endif %}">
-        <a class="nav-link" href="{% url 'list' model='facility' %}">
-          {% trans 'Facilities' %}
-        </a>
-      </li>      
+	<a class="nav-link" href="{% url 'list' model='facility' %}">
+	  {% trans 'Facilities' %}
+	</a>
+      </li>
       <li class="nav-item {% if view.view_name.0 == 'recipe' %}active{% endif %}">
-        <a class="nav-link" href="{% url 'list' model='recipe' %}">
-          {% trans 'Recipes' %}
-        </a>
+	<a class="nav-link" href="{% url 'list' model='recipe' %}">
+	  {% trans 'Recipes' %}
+	</a>
       </li>
       <li class="nav-item {% if view.view_name.0 == 'unit' %}active{% endif %}">
-        <a class="nav-link" href="{% url 'list' model='unit' %}">
-          {% trans 'Units' %}
-        </a>
+	<a class="nav-link" href="{% url 'list' model='unit' %}">
+	  {% trans 'Units' %}
+	</a>
       </li>
       <li class="nav-item {% if view.view_name.0 == 'unit' %}active{% endif %}">
-        <a class="nav-link" href="{% url 'list' model='conversion' %}">
-          {% trans 'Conversions' %}
-        </a>
-      </li>      
+	<a class="nav-link" href="{% url 'list' model='conversion' %}">
+	  {% trans 'Conversions' %}
+	</a>
+      </li>
       <li class="nav-item {% if view.view_name.0 == 'ingredient' %}active{% endif %}">
-        <a class="nav-link" href="{% url 'list' model='ingredient' %}">
-          {% trans 'Ingredients' %}
-        </a>
+	<a class="nav-link" href="{% url 'list' model='ingredient' %}">
+	  {% trans 'Ingredients' %}
+	</a>
       </li>
       <li class="nav-item {% if view.view_name.0 == 'category' %}active{% endif %}">
-        <a class="nav-link" href="{% url 'list' model='category' %}">
-          {% trans 'Categories' %}
-        </a>
+	<a class="nav-link" href="{% url 'list' model='category' %}">
+	  {% trans 'Categories' %}
+	</a>
       </li>
       <li class="nav-item {% if view.view_name.0 == 'tag' %}active{% endif %}">
-        <a class="nav-link" href="{% url 'list' model='tag' %}">
-          {% trans 'Tags' %}
-        </a>
-      </li>            
+	<a class="nav-link" href="{% url 'list' model='tag' %}">
+	  {% trans 'Tags' %}
+	</a>
+      </li>
+      <li class="nav-item {% if view.view_name.0 == 'allergen' %}active{% endif %}">
+	<a class="nav-link" href="{% url 'list' model='allergen' %}">
+	  {% trans 'Allergens' %}
+	</a>
+      </li>
       <li class="nav-item {% if view.view_name.0 == 'event' %}active{% endif %}">
-        <a class="nav-link" href="{% url 'list' model='event' %}">
-          {% trans 'Events' %}
-        </a>
+	<a class="nav-link" href="{% url 'list' model='event' %}">
+	  {% trans 'Events' %}
+	</a>
       </li>
     </ul>
 
     <ul class="navbar-nav navbar-right">
 
       <!--li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="toolMenu"
-           role="button" data-toggle="dropdown" aria-haspopup="true"
-           aria-expanded="false">
-          {% trans 'Tools' %}
-        </a>
-        <div class="dropdown-menu" aria-labelledby="toolMenu">
-          <a class="dropdown-item" href="{-% url 'odd_conversions' %-}">
-            {% trans 'Find odd conversions' %}
-          </a>
-        </div>
+	<a class="nav-link dropdown-toggle" href="#" id="toolMenu"
+	   role="button" data-toggle="dropdown" aria-haspopup="true"
+	   aria-expanded="false">
+	  {% trans 'Tools' %}
+	</a>
+	<div class="dropdown-menu" aria-labelledby="toolMenu">
+	  <a class="dropdown-item" href="{-% url 'odd_conversions' %-}">
+	    {% trans 'Find odd conversions' %}
+	  </a>
+	</div>
       </li-->
 
 
       {% if request.user.is_authenticated %}
       <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle"
-           data-toggle="dropdown">
-          {{ request.user }}
-          <span class="caret"></span>
-        </a>
-        <div class="dropdown-menu">
-          <a class="dropdown-item" href="{% url 'logout' %}">
-            {% trans 'Logout' %}
-          </a>
-        </div>
+	<a class="nav-link dropdown-toggle"
+	   data-toggle="dropdown">
+	  {{ request.user }}
+	  <span class="caret"></span>
+	</a>
+	<div class="dropdown-menu">
+	  <a class="dropdown-item" href="{% url 'logout' %}">
+	    {% trans 'Logout' %}
+	  </a>
+	</div>
       </li>
       {% else %}
       <li class="nav-item">
-        <a class="nav-link" href="{% url 'login' %}">
-          {% trans 'Login' %}
-        </a>
+	<a class="nav-link" href="{% url 'login' %}">
+	  {% trans 'Login' %}
+	</a>
       </li>
       {% endif %}
   </div>
@@ -137,7 +142,7 @@
   </h1>
 
   {% block warnings %}{% endblock %}
-  
+
   {% block content %}{% endblock %}
 </div>
 

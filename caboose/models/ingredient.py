@@ -5,6 +5,7 @@ from django.apps import apps
 from .unit import Unit
 from .conversion import Conversion
 from .category import Category
+from .allergen import Allergen
 
 
 class Ingredient(models.Model):
@@ -24,6 +25,7 @@ class Ingredient(models.Model):
     avg_price = models.FloatField(_("Average price per default unit/size"),
                                   blank=True, null=True)
     category = models.ManyToManyField(Category, blank=True)
+    allergen = models.ManyToManyField(Allergen, blank=True)
 
     def __str__(self):
 
@@ -54,8 +56,6 @@ class Ingredient(models.Model):
 
         """
 
-        # TODO: what if there is no default size? It is not required.
-
         conv_factor = 1
 
         if unit != self.default_unit:
@@ -63,7 +63,8 @@ class Ingredient(models.Model):
             conv_factor = unit.find_conversion_path(
                 self.default_unit, self).result
 
-        return conv_factor * self.avg_price * (amount / self.default_size)
+        return conv_factor * self.avg_price * (
+            amount / (self.default_size or 1))
 
     @property
     def categories(self):

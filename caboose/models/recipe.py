@@ -3,6 +3,7 @@ ingredients
 
 """
 
+import json
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 from django.db.models import F
@@ -10,6 +11,7 @@ from .unit import Unit
 from .ingredient import Ingredient
 from .facility import Facility
 from .tag import Tag
+from .allergen import Allergen
 
 
 class Recipe(models.Model):
@@ -34,6 +36,7 @@ class Recipe(models.Model):
     alt = models.ManyToManyField(Ingredient, through="AltIngredient",
                                  related_name="alt",
                                  through_fields=("recipe", "alternative"))
+    price_json = models.TextField(editable=False, null=True)
 
     def __str__(self):
 
@@ -102,7 +105,11 @@ class Recipe(models.Model):
 
         """ Return price per person or list of errors """
 
-        return self.price()
+        if not self.price_json:
+
+            self.save()
+
+        return json.loads(self.price_json)
 
     @property
     def price_pp_opt(self):
@@ -112,11 +119,11 @@ class Recipe(models.Model):
 
         """
 
-        return self.price(_filter={'optional': True})
+        return self.get_price(_filter={'optional': True})
 
-    def price(self, _filter=None):
+    def get_price(self, _filter=None):
 
-        """ Calculate price, takig sub recipes into account """
+        """ Calculate price, taking sub recipes into account """
 
         errors = []
         total = 0
@@ -133,6 +140,25 @@ class Recipe(models.Model):
                 errors.append(rec_ingredient)
 
         return (status, total / self.servings, errors)
+
+    def list_allergens(self):
+
+        """ Return a list of all allergens, based on the allergens in the
+        ingredients of this recipe """
+
+        ingredient_ids = [ingredient.ingredient.id for ingredient in
+                          self.recipeingredient_set.all()]
+
+        return Allergen.objects.filter(
+            ingredient__in=ingredient_ids).distinct()
+
+    def save(self, *args, **kwargs):
+
+        """ Override save to set calculated price """
+
+        self.price_json = json.dumps(self.get_price())
+
+        return super().save(*args, **kwargs)
 
     class Meta:
         ordering = ["name"]

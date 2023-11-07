@@ -14,6 +14,19 @@
   </span>
 {% endfor %}
 
+{% with allergens=obj.list_allergens %}
+{% if allergens %}
+{% for alg in allergens %}
+<span class="badge badge-danger">
+  {% include 'snippets/icon/allergen.html' %}
+  {{ alg }}
+</span>
+{% endfor %}
+|
+{% endif %}
+{% endwith %}
+
+  
 {{ obj.descr }} | {% trans "Price pp" %}
 {% with price=obj.price_pp %}
 

@@ -73,6 +73,10 @@ class Ingredient(models.Model):
 
         return self.category.all()
 
+    def list_allergens(self):
+
+        return self.allergen.all()
+
     class Meta:
         app_label = "caboose"
         ordering = ["name"]

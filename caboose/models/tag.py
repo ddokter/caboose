@@ -6,7 +6,6 @@ TAG_COLOR_VOCAB = [
     ("primary", "Blauw"),
     ("secondary", "Grijs"),
     ("success", "Groen"),
-    ("danger", "Rood"),
     ("warning", "Geel"),
     ("info", "Cyaan"),
     ("light", "Zwart"),

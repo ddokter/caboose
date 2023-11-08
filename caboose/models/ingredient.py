@@ -63,7 +63,7 @@ class Ingredient(models.Model):
             conv_factor = unit.find_conversion_path(
                 self.default_unit, self).result
 
-        return conv_factor * self.avg_price * (
+        return conv_factor * (self.avg_price or 0) * (
             amount / (self.default_size or 1))
 
     @property

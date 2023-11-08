@@ -10,6 +10,10 @@
 
 <p>{{ object.info }}</p>
 
+{% if object.id == 22 %}
+<div class="alert alert-danger">Hee, lekker ding! :)</div>
+{% endif %}
+
 <dl class="row">
   <dd class="col-sm-3">
     {% trans 'Group size' %}

@@ -154,9 +154,13 @@ class Recipe(models.Model):
 
     def save(self, *args, **kwargs):
 
-        """ Override save to set calculated price """
+        """Override save to set calculated price. Check whether we
+        already have an id.
 
-        self.price_json = json.dumps(self.get_price())
+        """
+
+        if self.id:
+            self.price_json = json.dumps(self.get_price())
 
         return super().save(*args, **kwargs)
 

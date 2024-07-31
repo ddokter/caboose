@@ -7,4 +7,4 @@ from .allergen import Allergen  # noqa
 #  from .service import Service  # noqa
 #  from .task import Task  # noqa
 
-from .signal_processors import *  # noqa
+#  from .signal_processors import *  # noqa

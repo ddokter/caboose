@@ -80,6 +80,11 @@
 	  {% trans 'Allergens' %}
 	</a>
       </li>
+      <li class="nav-item {% if view.view_name.0 == 'service' %}active{% endif %}">
+	<a class="nav-link" href="{% url 'list' model='service' %}">
+	  {% trans 'Services' %}
+	</a>
+      </li>      
       <li class="nav-item {% if view.view_name.0 == 'event' %}active{% endif %}">
 	<a class="nav-link" href="{% url 'list' model='event' %}">
 	  {% trans 'Events' %}

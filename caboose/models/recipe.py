@@ -160,7 +160,10 @@ class Recipe(models.Model):
         """
 
         if self.id:
-            self.price_json = json.dumps(self.get_price())
+            try:
+                self.price_json = json.dumps(self.get_price())
+            except TypeError:
+                pass
 
         return super().save(*args, **kwargs)
 

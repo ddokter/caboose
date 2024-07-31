@@ -1,56 +1,21 @@
 {% extends 'base.html' %}
 
+{% load i18n caboose_tags %}
+
 {% block content %}
 
-<h1>Caboose - koken in de kombuis</h1>
+<div class="section card">
+  <div class="card-body">
+    <div class="card-title"><h2>{% trans 'Open tasks' %}</h2></div>
+      
+    <div class="card-text">
 
-Bereken recepten voor groepen en genereer je boodschappenlijstje.
+      {% for task in view.list_open_tasks %}
 
-<hr>
-
-<div class="row">
-  <div class="col-3">
-    <div class="nav flex-column nav-pills" id="sections-tabs" role="tablist"
-         aria-orientation="vertical">
-      <a class="nav-link active" id="sources-tab" data-toggle="pill"
-         href="#recipes" role="tab" aria-controls="recipes"
-         aria-selected="true">Recepten</a>
-      <a class="nav-link" id="units-tab" data-toggle="pill"
-         href="#units" role="tab" aria-controls="units"
-         aria-selected="false">Eenheden</a>
-      <a class="nav-link" id="ingredients-tab" data-toggle="pill"
-         href="#ingredients" role="tab" aria-controls="ingredients"
-         aria-selected="false">Ingredienten</a>
-    </div>
-  </div>
-  <div class="col-9">
-    <div class="tab-content" id="sections-content">
-      <div class="tab-pane fade" id="units" role="tabpanel"
-           aria-labelledby="units-tab"> Eenheden kunnen voorkomen als
-        algemene eenheid, en kunnen indien van toepassing worden
-        onderverdeeld in plaatselijke eenheden. De liter is
-        bijvoorbeeld een generieke, metrische maat, maar de 'hoed'
-        komt voor in verschillende steden. Deze worden allen als
-        verschillend beschouwd.
-      </div>
-
-      <div class="tab-pane fade" id="ingredients" role="tabpanel"
-           aria-labelledby="ingredients-tab">
-
-        Eenheden in gewichtsmaten of inhoudsmaten.
-
-      </div>
-
-      <div class="tab-pane fade active show" id="recipes" role="tabpanel"
-           aria-labelledby="recipes-tab">
-
-        Recepten zijn met name gericht op de beschrijving in
-        ingredienten van een gerecht of volledige maaltijd.  Een
-        gerecht kan dus zijn een afzonderlijke gang, maar ook een
-        ontbijt.
-
-      </div>
-
+      {% task task %}
+      
+      {% endfor %}
+      
     </div>
   </div>
 </div>

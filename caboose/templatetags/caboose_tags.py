@@ -133,7 +133,7 @@ def status_label(obj):
 
     try:
         return obj._meta.model.get_status_display(obj)
-    except:
+    except AttributeError:
         return None
 
 
@@ -142,17 +142,19 @@ def status_class(status):
 
     """ If status is not an int, always return info """
 
-    try:
-        if status == 1:
-            return ""
-        elif status == 6:
-            return "success"
-        elif status > 4 or status == -1:
-            return "danger"
-        else:
-            return "warning"
-    except:
+    if not isinstance(status, int):
         return "info"
+
+    if status == 1:
+        return ""
+
+    if status == 6:
+        return "success"
+
+    if status > 4 or status == -1:
+        return "danger"
+
+    return "warning"
 
 
 @register.simple_tag
@@ -162,7 +164,7 @@ def byline(obj):
         return render_to_string("snippets/%s_byline.html" %
                                 get_model_name(obj),
                                 {'obj': obj})
-    except:
+    except BaseException:
         return ""
 
 
@@ -201,7 +203,7 @@ def icon(obj):
         return render_to_string("snippets/icon/%s.html" %
                                 get_model_name(obj),
                                 {'obj': obj})
-    except:
+    except BaseException:
         return ""
 
 
@@ -212,7 +214,7 @@ def status(obj):
         return render_to_string("snippets/status/%s.html" %
                                 get_model_name(obj),
                                 {'obj': obj})
-    except:
+    except BaseException:
         return ""
 
 
@@ -228,3 +230,19 @@ def fslabel(formset):
     """ Get the label from the verbose name plural option """
 
     return formset.model._meta.verbose_name_plural
+
+
+@register.inclusion_tag("snippets/task.html", takes_context=False)
+def task(_task):
+
+    """ Render snippet for task """
+
+    return {'task': _task}
+
+
+@register.inclusion_tag("snippets/priority.html", takes_context=False)
+def priority(_task):
+
+    """ Render snippet for task priority """
+
+    return {'task': _task}

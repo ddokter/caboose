@@ -10,10 +10,6 @@
 
 <p>{{ object.info }}</p>
 
-{% if object.id == 22 %}
-<div class="alert alert-danger">Hee, lekker ding! :)</div>
-{% endif %}
-
 <dl class="row">
   <dd class="col-sm-3">
     {% trans 'Group size' %}
@@ -40,6 +36,14 @@
     &cong; &euro; {{ object.get_cost_pp|floatformat:2 }}
   </dt>      
 </dl>
+
+<h2>{% trans 'Services' %}</h2>
+
+<ul>
+  {% for service in  object.list_services %}
+  <li>{{ service }}</li>
+  {% endfor %}
+</ul>
 
 <h2>{% trans 'Notes' %}</h2>
 

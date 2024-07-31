@@ -39,6 +39,9 @@ class Event(models.Model):
     plan = models.TextField(_("Plan"), blank=True, null=True)
     evaluation = models.TextField(_("Evaluation"), blank=True, null=True)
 
+    services = models.ManyToManyField(
+        "Service", blank=True, null=True, through="EventService")
+
     def __str__(self):
 
         try:
@@ -59,6 +62,10 @@ class Event(models.Model):
     def list_extras(self):
 
         return self.extra.all()
+
+    def list_services(self):
+
+        return self.services.all()
 
     def generate_shopping_list(self):
 
@@ -222,3 +229,11 @@ class EventIngredient(models.Model):
     unit = models.ForeignKey("Unit", on_delete=models.CASCADE)
     event = models.ForeignKey(Event, on_delete=models.CASCADE)
     ingredient = models.ForeignKey(Ingredient, on_delete=models.CASCADE)
+
+
+class EventService(models.Model):
+
+    """ Event services """
+
+    event = models.ForeignKey(Event, on_delete=models.CASCADE)
+    service = models.ForeignKey("Service", on_delete=models.CASCADE)

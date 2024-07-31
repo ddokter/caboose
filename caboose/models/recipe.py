@@ -110,7 +110,7 @@ class Recipe(models.Model):
             self.save()
 
         return json.loads(self.price_json)
-
+        
     @property
     def price_pp_opt(self):
 
@@ -137,7 +137,7 @@ class Recipe(models.Model):
                     rec_ingredient.calculated_amount)
             except IndexError:
                 status = -1
-                errors.append(rec_ingredient)
+                errors.append(str(rec_ingredient))
 
         return (status, total / self.servings, errors)
 
@@ -160,10 +160,7 @@ class Recipe(models.Model):
         """
 
         if self.id:
-            try:
-                self.price_json = json.dumps(self.get_price())
-            except TypeError:
-                pass
+            self.price_json = json.dumps(self.get_price())
 
         return super().save(*args, **kwargs)
 

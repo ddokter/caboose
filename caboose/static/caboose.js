@@ -63,4 +63,8 @@ $(document).ready(function() {
 	$(this).chosen({inherit_select_classes:true});
     });
 
+    $('select[name="recipe"]').each(function() {
+	$(this).chosen({inherit_select_classes:true});
+    });
+    
 });

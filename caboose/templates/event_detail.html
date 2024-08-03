@@ -62,11 +62,13 @@
 
 
 {% with recipes=object.eventrecipe_set.all %}
-{% if recipes|length %}
+
 <h2>
   {% trans 'Recipes' %}
+  {% inline_add_action 'eventrecipe' object '?fk_field=event' %}  
 </h2>
 
+{% if recipes|length %}
 <ul class="list-group">
   {% for recipe in recipes %}
   <li class="list-group-item">

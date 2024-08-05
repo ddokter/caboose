@@ -51,6 +51,8 @@ class Recipe(models.Model):
 
     def list_alts(self):
 
+        """ List alternative ingredients """
+
         return self.altingredient_set.all()
 
     def list_ingredients(self, _filter=None, exclude=None, servings=None):
@@ -58,8 +60,6 @@ class Recipe(models.Model):
         """List all ingredients, use filter if there. Also list
         ingredients of subs. Make sure to convert subs to proper
         servings.
-
-        TODO: recalc servings of subs if need be.
 
         """
 
@@ -70,7 +70,8 @@ class Recipe(models.Model):
             exclude = []
 
         base = self.recipeingredient_set.filter(**(_filter or {})).annotate(
-            calculated_amount=F("amount") * (servings / F("recipe__servings")))
+            calculated_amount=F("amount") * (float(servings) /
+                                             F("recipe__servings")))
 
         exclude.append(self.id)
 
@@ -110,7 +111,7 @@ class Recipe(models.Model):
             self.save()
 
         return json.loads(self.price_json)
-        
+
     @property
     def price_pp_opt(self):
 

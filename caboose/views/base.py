@@ -135,8 +135,16 @@ class InlineActionMixin:
             for field in field_defs.keys():
                 form.fields[field].queryset = field_defs[field]
 
-        except:
+        except AttributeError:
             pass
+
+        # Hide parent, if possible
+        #
+        for fname in [self.fk_field, "object_id", "content_type"]:
+            try:
+                form.fields[fname].widget = forms.HiddenInput()
+            except KeyError:
+                pass
 
         return form
 
@@ -157,10 +165,10 @@ class CreateView(GenericMixin, BaseCreateView, CTypeMixin):
 
         try:
             obj = self.get_object()
-        except:
+        except BaseException:
             try:
                 obj = self.get_parent()
-            except:
+            except BaseException:
                 obj = None
 
         return request.user.has_perm(permission, obj=obj)

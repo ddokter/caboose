@@ -1,0 +1,7 @@
+header, footer, .nav-tabs, nav, .icon {
+  display: none;
+}
+
+[role=toolbar] {
+    display: none !important;
+}

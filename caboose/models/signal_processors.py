@@ -9,7 +9,8 @@ from .task import Task
 @receiver(post_save, sender=Event)
 def event_post_save(sender, instance, **kwargs):
 
-    Task.objects.create(name=f"{ instance } - Personeel")
+    # Task.objects.create(name=f"{ instance } - Personeel")
+    pass
 
 
 @receiver(m2m_changed, sender=EventService)

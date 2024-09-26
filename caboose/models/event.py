@@ -1,4 +1,4 @@
-from datetime import date
+from datetime import date, timedelta
 from django.db import models
 from django.db.models import Q
 from django.utils.translation import gettext_lazy as _
@@ -58,6 +58,21 @@ class Event(models.Model):
         """ All recipes for this event """
 
         return self.recipe.all()
+
+    def get_schedule(self):
+
+        """ Return the day-by-day schedule for this trip """
+
+        date = self.from_date
+        dates = []
+
+        while date <= self.to_date:
+
+            dates.append(date)
+
+            date += timedelta(days=1)
+
+        return dates
 
     def list_extras(self):
 

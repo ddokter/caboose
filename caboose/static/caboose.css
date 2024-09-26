@@ -21,3 +21,8 @@ a[data-toggle=collapse] i.hide {
 a[data-toggle=collapse].collapsed i.hide {
     display: none;
 }
+
+li.day {
+    background-color: #e0e0e0;
+    margin: 5px;
+}

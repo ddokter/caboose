@@ -47,7 +47,7 @@
 
 <h2>{% trans 'Notes' %}</h2>
 
-{{ object.get_safe_notes }}
+<p>{{ object.notes|txt2html|linebreaks }}</p>
 
 <h2>{% trans 'Schema' %}</h2>
 
@@ -67,6 +67,23 @@
   {% trans 'Recipes' %}
   {% inline_add_action 'eventrecipe' object '?fk_field=event' %}  
 </h2>
+
+<ul class="list-group">
+  {% for date in object.get_schedule %}
+  <li class="list-group-item day">
+    <b>Day {{ forloop.counter }}: {{ date }}</b>
+    
+    <ul>
+      {% for recipe in recipes %}
+      {% if recipe.day == forloop.parentloop.counter %}
+      <li>{{ recipe.recipe }}</li>
+      {% endif %}
+      {% endfor %}
+    </ul>
+    
+  </li>
+  {% endfor %}
+</ul>
 
 {% if recipes|length %}
 <ul class="list-group">

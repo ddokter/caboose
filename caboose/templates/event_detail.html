@@ -71,7 +71,7 @@
 <ul class="list-group">
   {% for date in object.get_schedule %}
   <li class="list-group-item day">
-    <b>Day {{ forloop.counter }}: {{ date }}</b>
+    <b>Day {{ forloop.counter }}: {{ date|date:"D d M Y" }}</b>
     
     <ul>
       {% for recipe in recipes %}

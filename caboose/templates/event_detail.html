@@ -51,13 +51,11 @@
 
 <h2>{% trans 'Schema' %}</h2>
 
-<pre>
-{{ object.get_safe_plan }}
-</pre>
+<p>{{ object.plan|txt2html|linebreaks }}</p>
 
 {% if object.evaluation %}
 <h2>{% trans 'Evaluation' %}</h2>
-  {{ object.evaluation }}
+<p>{{ object.evaluation|txt2html|linebreaks }}</p>
 {% endif %}
 
 

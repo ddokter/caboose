@@ -24,6 +24,8 @@ class Recipe(models.Model):
     """
 
     name = models.CharField(_("Name"), max_length=100)
+    source = models.CharField(_("Source"), max_length=100, blank=True,
+                              null=True)
     descr = models.CharField(_("Description"), max_length=200)
     servings = models.SmallIntegerField(_("Servings"))
     ingredient = models.ManyToManyField(Ingredient, through="RecipeIngredient")
